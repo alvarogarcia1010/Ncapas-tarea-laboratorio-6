@@ -34,7 +34,7 @@
 	                </div>
 	                <div class="form-group">
 								    <label for="importancia">Importancia</label>
-								    <select th:field="*{importancia}" class="form-control" id="importancia">
+								    <select th:field="*{importancia.codigoImportancia}" class="form-control" id="importancia">
 				                <option th:each="importancia, row: ${importancias}" th:value="${importancia.codigoImportancia}" th:text="${importancia.importancia}"></option>
 				            </select>
 							   </div>

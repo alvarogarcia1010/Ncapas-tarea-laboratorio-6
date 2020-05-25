@@ -3,7 +3,6 @@ package com.uca.capas.practico.domain;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,12 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(schema="public", name="contribuyente")
@@ -47,12 +43,10 @@ public class Contribuyente {
 	@NotEmpty(message="Este campo no puede estar vacio")
 	private String nit;
 	
-	@NotNull(message = "El campo Fecha no puede quedar vacio")
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "s_fecha_ingreso")
 	private Date fechaIngreso;
 	
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "c_importancia")
     private Importancia importancia;
 	

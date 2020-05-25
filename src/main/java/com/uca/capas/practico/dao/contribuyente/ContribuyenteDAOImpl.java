@@ -1,5 +1,6 @@
 package com.uca.capas.practico.dao.contribuyente;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -33,6 +34,8 @@ public class ContribuyenteDAOImpl implements ContribuyenteDAO {
 		try {
 			if(contribuyente.getCodigoContribuyente() == null) 
 			{
+				long millis=System.currentTimeMillis();  
+				contribuyente.setFechaIngreso(new Date(millis));
 				entityManager.persist(contribuyente);
 			}
 			else 

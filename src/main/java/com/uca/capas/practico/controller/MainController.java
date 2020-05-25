@@ -45,8 +45,7 @@ public class MainController
 	@RequestMapping("/guardarContribuyente")
 	public ModelAndView save(@Valid @ModelAttribute Contribuyente contribuyente, BindingResult result) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(result);
-		System.out.println(contribuyente.getImportancia());
+
 		if(result.hasErrors()) 
 		{
 			List<Importancia> listaDeImportancia = null;
@@ -64,10 +63,7 @@ public class MainController
 		else 
 		{
 			contribuyenteService.save(contribuyente);
-			Contribuyente nuevoContribuyente = new Contribuyente();
-			mav.addObject("exito", true);
-			mav.addObject("estudiante", nuevoContribuyente);
-			mav.setViewName("index");
+			mav.setViewName("exito");
 		}
 		
 		return mav;

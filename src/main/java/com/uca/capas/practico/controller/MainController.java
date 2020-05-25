@@ -2,8 +2,12 @@ package com.uca.capas.practico.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,4 +41,54 @@ public class MainController
 		
 		return mav;
 	}
+	
+	@RequestMapping("/guardarContribuyente")
+	public ModelAndView save(@Valid @ModelAttribute Contribuyente contribuyente, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(result);
+		System.out.println(contribuyente.getImportancia());
+		if(result.hasErrors()) 
+		{
+			List<Importancia> listaDeImportancia = null;
+			
+			try {
+				listaDeImportancia = contribuyenteService.getListaDeImportancias();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			mav.addObject("importancias", listaDeImportancia);
+			mav.setViewName("index");
+		}
+		else 
+		{
+			contribuyenteService.save(contribuyente);
+			Contribuyente nuevoContribuyente = new Contribuyente();
+			mav.addObject("exito", true);
+			mav.addObject("estudiante", nuevoContribuyente);
+			mav.setViewName("index");
+		}
+		
+		return mav;
+	}
+	
+	@RequestMapping("/listado")
+	public ModelAndView listado() {
+		ModelAndView mav = new ModelAndView();
+		List<Contribuyente> contribuyentes = null;
+		
+		try {
+			contribuyentes = contribuyenteService.getAll();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("contribuyentes", contribuyentes);
+		mav.setViewName("listado");
+		
+		return mav;
+	}
+	
 }

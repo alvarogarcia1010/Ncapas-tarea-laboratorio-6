@@ -33,8 +33,8 @@
 	                  <small th:errors="*{nit}" style="color: #FF0000"></small> 
 	                </div>
 	                <div class="form-group">
-								    <label for="codigoImportancia">Importancia</label>
-								    <select th:field="*{codigoImportancia}" class="form-control" id="codigoImportancia">
+								    <label for="importancia">Importancia</label>
+								    <select th:field="*{importancia}" class="form-control" id="importancia">
 				                <option th:each="importancia, row: ${importancias}" th:value="${importancia.codigoImportancia}" th:text="${importancia.importancia}"></option>
 				            </select>
 							   </div>

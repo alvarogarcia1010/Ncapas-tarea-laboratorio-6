@@ -2,6 +2,8 @@ package com.uca.capas.practico.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,12 @@ public class ContribuyenteServiceImpl implements ContribuyenteService
 	public List<Contribuyente> getAll() throws DataAccessException 
 	{
 		return contribuyenteDAO.getAll();
+	}
+	
+	@Override
+	@Transactional
+	public void save(Contribuyente contribuyente) throws DataAccessException {
+		contribuyenteDAO.save(contribuyente);		
 	}
 	
 }

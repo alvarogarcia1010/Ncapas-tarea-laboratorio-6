@@ -1,10 +1,14 @@
 package com.uca.capas.practico.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +28,9 @@ public class Importancia {
 	@Size(message="El campo no debe contener mas de 30 caracteres", max=30)
 	@NotEmpty(message="Este campo no puede estar vacio")
 	private String importancia;
+	
+	@OneToMany(mappedBy="importancia", cascade=CascadeType.ALL)
+	private List<Contribuyente> contribuyentes;
 	
 	public Importancia() {super();}
 

@@ -12,4 +12,7 @@ public interface ContribuyenteService {
 	public List<Importancia> getListaDeImportancias() throws DataAccessException;
 	
 	public List<Contribuyente> getAll() throws DataAccessException;
+	
+	public void save(Contribuyente contribuyente) throws DataAccessException;
+
 }

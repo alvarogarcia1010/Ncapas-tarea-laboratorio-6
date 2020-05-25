@@ -1,6 +1,7 @@
 package com.uca.capas.practico.domain;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,6 +19,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(schema="public", name="contribuyente")
@@ -27,17 +31,6 @@ public class Contribuyente {
 	@SequenceGenerator(name = "contribuyente_c_contribuyente_seq", sequenceName = "public.contribuyente_c_contribuyente_seq", allocationSize = 1)
 	@Column(name="c_contribuyente")
 	private Integer codigoContribuyente;
-	
-	@Column(name="c_importancia")
-	private String codigoImportancia;
-	
-	public String getCodigoImportancia() {
-		return codigoImportancia;
-	}
-
-	public void setCodigoImportancia(String codigoImportancia) {
-		this.codigoImportancia = codigoImportancia;
-	}
 
 	@Column(name="s_nombre")
 	@Size(message="El campo no debe contener mas de 30 caracteres", max=30)
@@ -56,10 +49,11 @@ public class Contribuyente {
 	
 	@NotNull(message = "El campo Fecha no puede quedar vacio")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "f_nacimiento")
+	@Column(name = "s_fecha_ingreso")
 	private Date fechaIngreso;
 	
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "c_importancia")
     private Importancia importancia;
 	
 	public Contribuyente() {super();}
@@ -103,4 +97,25 @@ public class Contribuyente {
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
+	
+	public String getFechaIngresoDelegate(){
+		if(this.fechaIngreso == null){
+			return "";
+		}
+		else{
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String shortdate = sdf.format(this.fechaIngreso.getTime());
+			return shortdate;
+		}
+	}
+
+	public Importancia getImportancia() {
+		return importancia;
+	}
+
+	public void setImportancia(Importancia importancia) {
+		this.importancia = importancia;
+	}
+	
+	
 }
